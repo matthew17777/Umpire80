@@ -1,63 +1,18 @@
 body {
-
-    background: linear-gradient(#0a3d62, #1e5f8a);
-
+    background: linear-gradient(to bottom, #0a3d62, #1e5f8a);
     color: white;
-
     font-family: Georgia, serif;
-
     text-align: center;
-
     margin: 0;
-
-    height: 100vh;
-
+    padding: 60px;
 }
-
-
-.container {
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    height: 100vh;
-
-}
-
 
 h1 {
-
-    font-size: 50px;
-
+    font-size: 60px;
+    margin-bottom: 20px;
 }
-
 
 p {
-
     font-size: 28px;
-
-}
-
-
-button {
-
-    margin-top: 40px;
-
-    width: 80%;
-
-    height: 200px;
-
-    font-size: 45px;
-
-    font-weight: bold;
-
-    border-radius: 40px;
-
-    cursor: pointer;
-
+    line-height: 1.6;
 }
