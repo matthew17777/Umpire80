@@ -1,3 +1,19 @@
-body {
-    background-color: gold;
+    body {
+    background: linear-gradient(to bottom, #0a3d62, #1e5f8a);
+    color: white;
+    font-family: Georgia, serif;
+    text-align: center;
+    margin: 0;
+    padding: 60px;
 }
+
+h1 {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 28px;
+    line-height: 1.6;
+}
+
