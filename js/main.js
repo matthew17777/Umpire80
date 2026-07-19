@@ -1,18 +1,21 @@
-// Umpire80 press-and-hold cake + confetti + redirect
+// Umpire80 press-and-hold cake + confetti + optional CTA (no auto-redirect)
 
 const btn = document.getElementById("cakeButton");
 const progressFill = document.getElementById("progressFill");
 const holdHint = document.getElementById("holdHint");
 const afterMessage = document.getElementById("afterMessage");
 
+const ctaPanel = document.getElementById("ctaPanel");
+const goLinkBtn = document.getElementById("goLinkBtn");
+const noBtn = document.getElementById("noBtn");
+
 const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
+const ctx = canvas?.getContext("2d");
 
 const CHANGE_URL = window.CHANGE_URL || "https://example.com";
 
 // How long to hold (ms)
 const HOLD_MS = 1700;
-
 // Progress update interval
 const TICK_MS = 16;
 
@@ -22,18 +25,18 @@ let startTime = 0;
 let tickId = null;
 
 // ---------- Hold / Trigger ----------
-function resetUI() {
+function resetHoldUI() {
   holding = false;
   if (tickId) clearInterval(tickId);
   tickId = null;
 
   if (progressFill) progressFill.style.transform = "scaleX(0)";
   if (holdHint) holdHint.textContent = "Press & hold…";
-  if (afterMessage) afterMessage.classList.remove("show");
-  triggered = false;
+  // If user releases before unlocking, hide CTA again
+  if (ctaPanel && !triggered) ctaPanel.classList.remove("show");
 }
 
-function trigger() {
+function triggerUnlock() {
   if (triggered) return;
   triggered = true;
   holding = false;
@@ -41,15 +44,16 @@ function trigger() {
   if (holdHint) holdHint.textContent = "Unlocked! 🎉";
   if (afterMessage) afterMessage.classList.add("show");
 
-  startConfetti(220);
-
-  if (navigator.vibrate) {
-    navigator.vibrate([60, 40, 60]);
+  // Reveal the user's choice (no forced redirect)
+  if (ctaPanel) ctaPanel.classList.add("show");
+  if (goLinkBtn) {
+    goLinkBtn.href = CHANGE_URL;
+    goLinkBtn.setAttribute("aria-label", "Open Change.org page");
   }
 
-  setTimeout(() => {
-    window.location.href = CHANGE_URL;
-  }, 2200);
+  startConfetti(220);
+
+  if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
 }
 
 function startHold() {
@@ -57,25 +61,27 @@ function startHold() {
 
   holding = true;
   startTime = performance.now();
+
   if (progressFill) progressFill.style.transform = "scaleX(0)";
   if (holdHint) holdHint.textContent = "Keep holding…";
 
   tickId = setInterval(() => {
+    if (!holding) return;
+
     const elapsed = performance.now() - startTime;
     const p = Math.max(0, Math.min(1, elapsed / HOLD_MS));
 
-    if (progressFill) {
-      progressFill.style.transform = `scaleX(${p})`;
-    }
+    if (progressFill) progressFill.style.transform = `scaleX(${p})`;
 
     if (p >= 1) {
       clearInterval(tickId);
       tickId = null;
-      trigger();
+      triggerUnlock();
     }
   }, TICK_MS);
 }
 
+// Pointer events cover mouse + touch
 if (btn) {
   btn.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
@@ -83,18 +89,26 @@ if (btn) {
     startHold();
   });
 
-  btn.addEventListener("pointerup", resetUI);
-  btn.addEventListener("pointercancel", resetUI);
-  btn.addEventListener("pointerleave", resetUI);
+  btn.addEventListener("pointerup", resetHoldUI);
+  btn.addEventListener("pointercancel", resetHoldUI);
+  btn.addEventListener("pointerleave", resetHoldUI);
+
+  // Keyboard accessibility
+  btn.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      triggerUnlock();
+    }
+  });
 }
 
-// Keyboard accessibility
-btn?.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" || e.key === " ") {
+// If user clicks “No thanks”, just hide the CTA (doesn’t break the page)
+if (noBtn) {
+  noBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    trigger();
-  }
-});
+    if (ctaPanel) ctaPanel.classList.remove("show");
+  });
+}
 
 // ---------- Confetti ----------
 let W = 0, H = 0;
@@ -103,10 +117,12 @@ function resize() {
   W = Math.floor(window.innerWidth * dpr);
   H = Math.floor(window.innerHeight * dpr);
 
-  canvas.width = W;
-  canvas.height = H;
-  canvas.style.width = window.innerWidth + "px";
-  canvas.style.height = window.innerHeight + "px";
+  if (canvas) {
+    canvas.width = W;
+    canvas.height = H;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+  }
 }
 window.addEventListener("resize", resize);
 resize();
@@ -118,14 +134,12 @@ let anim = false;
 function startConfetti(count) {
   if (!canvas || !ctx) return;
 
-  // Reduced motion: just skip confetti but still redirect.
   const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
   if (reduce) return;
 
   const dpr = window.devicePixelRatio || 1;
-
-  const cx = (W * 0.5);
-  const cy = (H * 0.25);
+  const cx = W * 0.5;
+  const cy = H * 0.25;
 
   for (let i = 0; i < count; i++) {
     particles.push({
@@ -139,7 +153,7 @@ function startConfetti(count) {
       w: (6 + Math.random() * 10) * dpr,
       h: (4 + Math.random() * 10) * dpr,
       life: 70 + Math.floor(Math.random() * 40),
-      color: colors[Math.floor(Math.random() * colors.length)]
+      color: colors[Math.floor(Math.random() * colors.length)],
     });
   }
 
@@ -171,9 +185,6 @@ function tick() {
     if (p.life <= 0) particles.splice(i, 1);
   }
 
-  if (particles.length > 0) {
-    requestAnimationFrame(tick);
-  } else {
-    anim = false;
-  }
+  if (particles.length > 0) requestAnimationFrame(tick);
+  else anim = false;
 }
