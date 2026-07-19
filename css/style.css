@@ -1,101 +1,218 @@
+*{
+box-sizing:border-box;
+}
+
 body{
 
-    margin:0;
+margin:0;
 
-    font-family:Georgia,serif;
+height:100vh;
 
-    background:linear-gradient(#0a3d62,#1e5f8a);
+display:flex;
 
-    color:white;
+justify-content:center;
 
-    display:flex;
+align-items:center;
 
-    justify-content:center;
+overflow:hidden;
 
-    align-items:center;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 
-    height:100vh;
+background:linear-gradient(
+135deg,
+#d8f3ff,
+#efe1ff,
+#fff4c9,
+#ffdfe9
+);
 
-    text-align:center;
+background-size:400% 400%;
+
+animation:bgMove 18s ease infinite;
 
 }
 
-.container{
+@keyframes bgMove{
 
-    width:90%;
+0%{background-position:0% 50%;}
 
-    max-width:900px;
+50%{background-position:100% 50%;}
+
+100%{background-position:0% 50%;}
+
+}
+
+.glass{
+
+width:min(90%,900px);
+
+padding:60px;
+
+text-align:center;
+
+background:rgba(255,255,255,.18);
+
+backdrop-filter:blur(18px);
+
+border-radius:35px;
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.15);
 
 }
 
 h1{
 
-    font-size:55px;
+font-size:58px;
+
+margin-bottom:20px;
+
+color:#183153;
 
 }
 
-p{
+.subtitle{
 
-    font-size:28px;
+font-size:28px;
+
+line-height:1.6;
+
+color:#274c77;
 
 }
 
 #cakeButton{
 
-    font-size:170px;
+background:none;
 
-    background:none;
+border:none;
 
-    border:none;
+cursor:pointer;
 
-    cursor:pointer;
+font-size:180px;
 
-    transition:.2s;
+animation:float 3s ease-in-out infinite;
 
-}
-
-#cakeButton:hover{
-
-    transform:scale(1.1);
+transition:.25s;
 
 }
 
-.instructions{
+@keyframes float{
 
-    opacity:.8;
+0%{
+
+transform:translateY(0px);
 
 }
 
-.hidden{
+50%{
 
-    display:none;
+transform:translateY(-12px);
+
+}
+
+100%{
+
+transform:translateY(0px);
+
+}
+
+}
+
+.holding{
+
+animation:wobble .15s infinite !important;
+
+filter:drop-shadow(0 0 25px gold);
+
+}
+
+@keyframes wobble{
+
+0%{
+
+transform:scale(1.05) rotate(-5deg);
+
+}
+
+50%{
+
+transform:scale(1.22) rotate(5deg);
+
+}
+
+100%{
+
+transform:scale(1.35) rotate(-5deg);
+
+}
+
+}
+
+#instruction{
+
+font-size:22px;
+
+margin-top:20px;
+
+color:#274c77;
+
+font-weight:600;
 
 }
 
 .petitionButton{
 
-    display:inline-block;
+display:inline-block;
 
-    margin-top:30px;
+margin-top:30px;
 
-    padding:20px 45px;
+padding:18px 40px;
 
-    background:#ffd54f;
+font-size:26px;
 
-    color:black;
+text-decoration:none;
 
-    text-decoration:none;
+border-radius:18px;
 
-    font-size:28px;
+background:white;
 
-    border-radius:15px;
+color:#183153;
 
-    font-weight:bold;
+font-weight:bold;
+
+transition:.3s;
 
 }
 
-.growing{
+.petitionButton:hover{
 
-    transform:scale(1.4);
+transform:translateY(-3px);
+
+box-shadow:0 15px 30px rgba(0,0,0,.15);
+
+}
+
+.fadeOut{
+
+animation:fade .8s forwards;
+
+}
+
+@keyframes fade{
+
+to{
+
+opacity:0;
+
+transform:scale(.95);
+
+}
+
+}
+
+.hidden{
+
+display:none;
 
 }
