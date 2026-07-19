@@ -1,559 +1,195 @@
 /* =====================================================
    GLOBAL RESET
 ===================================================== */
-
 * {
     box-sizing: border-box;
 }
 
-
 body {
-
     margin: 0;
-
     min-height: 100vh;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     overflow: hidden;
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Helvetica,
-        Arial,
-        sans-serif;
-
-
-    background: linear-gradient(
-        135deg,
-        #d8f3ff,
-        #eadcff,
-        #fff2c9,
-        #ffdce8
-    );
-
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #d8f3ff, #eadcff, #fff2c9, #ffdce8);
     background-size: 400% 400%;
-
     animation: backgroundMove 18s ease infinite;
-
 }
-
-
 
 /* =====================================================
    MOVING PASTEL BACKGROUND
 ===================================================== */
-
-
 @keyframes backgroundMove {
-
-    0% {
-
-        background-position: 0% 50%;
-
-    }
-
-
-    50% {
-
-        background-position: 100% 50%;
-
-    }
-
-
-    100% {
-
-        background-position: 0% 50%;
-
-    }
-
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
-
-
 
 /* =====================================================
    GLASS CARD
 ===================================================== */
-
-
 .glass-card {
-
     width: min(90%, 900px);
-
     min-height: 650px;
-
     padding: 60px 50px;
-
     text-align: center;
-
-
-    background:
-        rgba(255,255,255,0.35);
-
-
+    background: rgba(255,255,255,0.35);
     backdrop-filter: blur(25px);
-
     -webkit-backdrop-filter: blur(25px);
-
-
     border-radius: 40px;
-
-
-    box-shadow:
-
-        0 30px 80px
-        rgba(0,0,0,0.15);
-
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
+    box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-
 
 /* =====================================================
    TEXT
 ===================================================== */
-
-
 h1 {
-
-    margin:0;
-
-    color:#17324d;
-
-
-    font-size:
-
-        clamp(40px, 6vw, 70px);
-
-
-    line-height:1.05;
-
-    letter-spacing:-2px;
-
+    margin: 0;
+    color: #17324d;
+    font-size: clamp(40px, 6vw, 70px);
+    line-height: 1.05;
+    letter-spacing: -2px;
 }
-
 
 .boyd {
-
-    font-weight:800;
-
+    font-weight: 800;
 }
-
-
 
 .subtitle {
-
-
-    margin-top:25px;
-
-    margin-bottom:35px;
-
-
-    font-size:
-
-        clamp(18px,3vw,30px);
-
-
-    color:#355070;
-
-
-    letter-spacing:1px;
-
+    margin-top: 25px;
+    margin-bottom: 35px;
+    font-size: clamp(18px, 3vw, 30px);
+    color: #355070;
+    letter-spacing: 1px;
 }
-
-
 
 /* =====================================================
    CAKE BUTTON
 ===================================================== */
-
-
 #cakeButton {
-
-
-    border:none;
-
-    background:none;
-
-
-    cursor:pointer;
-
-
-    font-size:
-
-        clamp(180px,25vw,300px);
-
-
-    line-height:1;
-
-
-    padding:0;
-
-
-    animation:
-
-        floatCake 3s ease-in-out infinite;
-
-
-    transition:
-
-        transform .25s ease;
-
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: clamp(180px, 25vw, 300px);
+    line-height: 1;
+    padding: 0;
+    animation: floatCake 3s ease-in-out infinite;
+    transition: transform .25s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    
+    /* Variables for dynamic shaking */
+    --shake-x: 0px;
+    --shake-y: 0px;
+    --scale: 1;
 }
-
-
 
 /* gentle floating */
-
 @keyframes floatCake {
-
-
-    0% {
-
-        transform:translateY(0);
-
-    }
-
-
-    50% {
-
-        transform:translateY(-18px);
-
-    }
-
-
-    100% {
-
-        transform:translateY(0);
-
-    }
-
-
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+    100% { transform: translateY(0); }
 }
-
-
 
 /* activated while holding */
-
 .holding {
-
-
-    animation:
-
-        cakeWobble .15s infinite;
-
-
-    filter:
-
-        drop-shadow(
-            0 0 35px gold
-        );
-
-
+    animation: none !important; /* Stop the gentle float so it can shake violently */
+    filter: drop-shadow(0 0 35px gold);
+    transform: translate(var(--shake-x), var(--shake-y)) scale(var(--scale)) !important;
+    transition: none !important; /* Instant response for the shake */
 }
-
-
-
-@keyframes cakeWobble {
-
-
-    0% {
-
-        transform:
-
-        scale(1.05)
-        rotate(-5deg);
-
-    }
-
-
-    50% {
-
-        transform:
-
-        scale(1.25)
-        rotate(5deg);
-
-    }
-
-
-    100% {
-
-        transform:
-
-        scale(1.35)
-        rotate(-5deg);
-
-    }
-
-}
-
-
 
 /* =====================================================
    INSTRUCTION TEXT
 ===================================================== */
-
-
 #instruction {
-
-
-    margin-top:35px;
-
-
-    font-size:24px;
-
-
-    color:#355070;
-
-
-    font-weight:600;
-
-
+    margin-top: 35px;
+    font-size: 24px;
+    color: #355070;
+    font-weight: 600;
 }
-
-
 
 /* =====================================================
    SECOND SCREEN
 ===================================================== */
-
-
 .hidden {
-
-    display:none;
-
+    display: none;
 }
-
-
 
 #messageContainer {
-
-
-    animation:
-
-        fadeIn 1s ease forwards;
-
-
+    animation: fadeIn 1s ease forwards;
 }
-
-
 
 #messageTitle {
-
-
-    font-size:
-
-        clamp(45px,7vw,85px);
-
-
-    color:#17324d;
-
-
+    font-size: clamp(45px, 7vw, 85px);
+    color: #17324d;
 }
-
-
 
 #messageText {
-
-
-    font-size:
-
-        clamp(25px,4vw,45px);
-
-
-    line-height:1.4;
-
-
-    color:#355070;
-
+    font-size: clamp(25px, 4vw, 45px);
+    line-height: 1.4;
+    color: #355070;
 }
-
-
 
 /* =====================================================
    PETITION BUTTON
 ===================================================== */
-
-
 #petitionButton {
-
-
-    display:inline-block;
-
-
-    margin-top:50px;
-
-
-    padding:
-
-        20px 45px;
-
-
-    border-radius:30px;
-
-
-    background:white;
-
-
-    color:#17324d;
-
-
-    text-decoration:none;
-
-
-    font-size:28px;
-
-
-    font-weight:700;
-
-
-    box-shadow:
-
-        0 15px 35px
-        rgba(0,0,0,.15);
-
-
-
-    opacity:0;
-
-
-    transform:
-
-        translateY(30px);
-
-
-
-    transition:.4s ease;
-
+    display: inline-block;
+    margin-top: 50px;
+    padding: 20px 45px;
+    border-radius: 30px;
+    background: white;
+    color: #17324d;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 700;
+    box-shadow: 0 15px 35px rgba(0,0,0,.15);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: .4s ease;
 }
-
-
 
 #petitionButton:hover {
-
-
-    transform:
-
-        translateY(-5px)
-        scale(1.05);
-
-
+    transform: translateY(-5px) scale(1.05);
 }
-
-
 
 /* =====================================================
    FADE EFFECTS
 ===================================================== */
-
-
 .fadeOut {
-
-
-    animation:
-
-        fadeOut .8s forwards;
-
-
+    animation: fadeOut .8s forwards;
 }
-
-
 
 @keyframes fadeOut {
-
-
-    from {
-
-        opacity:1;
-
-    }
-
-
-    to {
-
-        opacity:0;
-
-        transform:scale(.95);
-
-    }
-
-
+    from { opacity: 1; }
+    to { opacity: 0; transform: scale(.95); }
 }
-
-
 
 .fadeIn {
-
-
-    animation:
-
-        fadeIn 1s forwards;
-
-
+    animation: fadeIn 1s forwards;
 }
-
-
 
 @keyframes fadeIn {
-
-
-    from {
-
-        opacity:0;
-
-        transform:translateY(30px);
-
-    }
-
-
-    to {
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
-
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
-
-
 
 /* =====================================================
    MOBILE
 ===================================================== */
-
-
 @media(max-width:600px){
-
-
     .glass-card {
-
-        min-height:90vh;
-
-        padding:35px 20px;
-
+        min-height: 90vh;
+        padding: 35px 20px;
     }
-
-
     #cakeButton {
-
-        font-size:170px;
-
+        font-size: 170px;
     }
-
-
 }
