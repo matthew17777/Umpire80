@@ -1,127 +1,436 @@
-const cake=document.getElementById("cakeButton");
+// =====================================================
+// ELEMENTS
+// =====================================================
 
-const instruction=document.getElementById("instruction");
+const cakeButton = document.getElementById("cakeButton");
 
-const page1=document.getElementById("page1");
+const instruction = document.getElementById("instruction");
 
-const page2=document.getElementById("page2");
+const screen1 = document.getElementById("screen1");
 
-let timer;
+const screen2 = document.getElementById("screen2");
 
-let progressTimer;
+const messageTitle = document.getElementById("messageTitle");
 
-let holding=false;
+const messageText = document.getElementById("messageText");
 
-function celebrate(){
+const petitionButton = document.getElementById("petitionButton");
 
-confetti({
 
-particleCount:180,
+// =====================================================
+// VARIABLES
+// =====================================================
 
-spread:90,
+let holdTimer;
 
-origin:{x:.2,y:.6}
+let messageTimer;
 
-});
+let isHolding = false;
 
-setTimeout(()=>{
 
-confetti({
+// =====================================================
+// START HOLDING THE CAKE
+// =====================================================
 
-particleCount:180,
+function startHolding() {
 
-spread:120,
 
-origin:{x:.8,y:.6}
+    if (isHolding) return;
 
-});
 
-},200);
+    isHolding = true;
 
-setTimeout(()=>{
 
-confetti({
+    cakeButton.classList.add("holding");
 
-particleCount:260,
 
-spread:180,
+    instruction.innerHTML = "✨ Keep holding...";
 
-origin:{y:.45}
 
-});
+    // Message progression while holding
 
-},400);
+    messageTimer = setInterval(() => {
 
-instruction.innerHTML="🎉 Surprise!";
 
-page1.classList.add("fadeOut");
+        if (instruction.innerHTML.includes("Keep")) {
 
-setTimeout(()=>{
 
-page1.classList.add("hidden");
+            instruction.innerHTML =
+                "🎈 Almost there...";
 
-page2.classList.remove("hidden");
 
-},800);
+        } else {
 
-}
 
-function start(){
+            instruction.innerHTML =
+                "🎉 Ready...";
 
-if(holding)return;
 
-holding=true;
+        }
 
-cake.classList.add("holding");
 
-let seconds=0;
+    }, 1200);
 
-instruction.innerHTML="✨ Keep holding...";
 
-progressTimer=setInterval(()=>{
 
-seconds++;
+    // Complete after 3 seconds
 
-if(seconds===1){
+    holdTimer = setTimeout(() => {
 
-instruction.innerHTML="🎈 Keep holding...";
+
+        celebrate();
+
+
+    }, 3000);
+
 
 }
 
-if(seconds===2){
 
-instruction.innerHTML="🎉 Almost there...";
+
+
+
+// =====================================================
+// STOP HOLDING
+// =====================================================
+
+function stopHolding() {
+
+
+    if (!isHolding) return;
+
+
+    isHolding = false;
+
+
+    clearTimeout(holdTimer);
+
+    clearInterval(messageTimer);
+
+
+    cakeButton.classList.remove("holding");
+
+
+    instruction.innerHTML =
+        "Hold the cake.";
+
 
 }
 
-},1000);
 
-timer=setTimeout(celebrate,3000);
+
+
+
+// =====================================================
+// CELEBRATION SEQUENCE
+// =====================================================
+
+function celebrate() {
+
+
+    clearInterval(messageTimer);
+
+
+    instruction.innerHTML =
+        "🥳 Surprise!";
+
+
+    // First confetti burst
+
+    confetti({
+
+        particleCount:180,
+
+        spread:90,
+
+        origin:{
+            x:.2,
+            y:.6
+        }
+
+    });
+
+
+
+    // Second burst
+
+    setTimeout(() => {
+
+
+        confetti({
+
+            particleCount:180,
+
+            spread:120,
+
+            origin:{
+                x:.8,
+                y:.6
+            }
+
+        });
+
+
+    },250);
+
+
+
+
+    // Final huge burst
+
+    setTimeout(() => {
+
+
+        confetti({
+
+            particleCount:300,
+
+            spread:180,
+
+            origin:{
+                y:.4
+            }
+
+        });
+
+
+    },500);
+
+
+
+    // Move to thank-you screen
+
+    setTimeout(() => {
+
+
+        transitionToThankYou();
+
+
+    },1200);
+
 
 }
 
-function stop(){
 
-if(!holding)return;
 
-holding=false;
 
-clearTimeout(timer);
 
-clearInterval(progressTimer);
 
-cake.classList.remove("holding");
 
-instruction.innerHTML="Hold the cake for 3 seconds";
+// =====================================================
+// SECOND SCREEN STORY
+// =====================================================
+
+function transitionToThankYou() {
+
+
+    screen1.classList.add("fadeOut");
+
+
+
+    setTimeout(() => {
+
+
+        screen1.classList.add("hidden");
+
+
+        screen2.classList.remove("hidden");
+
+
+        runMessageSequence();
+
+
+
+    },800);
+
 
 }
 
-cake.addEventListener("mousedown",start);
 
-cake.addEventListener("mouseup",stop);
 
-cake.addEventListener("mouseleave",stop);
 
-cake.addEventListener("touchstart",start,{passive:true});
 
-cake.addEventListener("touchend",stop);
+
+function runMessageSequence() {
+
+
+    const messages = [
+
+
+        {
+
+            title:"🥳 THANK YOU!",
+
+            text:""
+
+        },
+
+
+        {
+
+            title:"",
+
+            text:
+            "Your birthday wishes<br>made Boyd's day."
+
+        },
+
+
+        {
+
+            title:"⚾",
+
+            text:
+            "After decades<br>behind home plate..."
+
+        },
+
+
+        {
+
+            title:"",
+
+            text:
+            "Boyd isn't retiring.<br><br>The rules are making him."
+
+        },
+
+
+        {
+
+            title:"",
+
+            text:
+            "Learn why Boyd should<br>still be behind the plate."
+
+        }
+
+
+
+    ];
+
+
+
+    let index = 0;
+
+
+
+    function showNext(){
+
+
+        if(index >= messages.length){
+
+
+            revealButton();
+
+            return;
+
+
+        }
+
+
+
+        messageTitle.innerHTML =
+            messages[index].title;
+
+
+        messageText.innerHTML =
+            messages[index].text;
+
+
+
+        messageTitle.classList.remove("fadeIn");
+
+        messageText.classList.remove("fadeIn");
+
+
+
+        void messageTitle.offsetWidth;
+
+
+
+        messageTitle.classList.add("fadeIn");
+
+        messageText.classList.add("fadeIn");
+
+
+
+        index++;
+
+
+        messageTimer = setTimeout(showNext,2500);
+
+
+    }
+
+
+
+    showNext();
+
+
+}
+
+
+
+
+
+
+// =====================================================
+// BUTTON REVEAL
+// =====================================================
+
+function revealButton(){
+
+
+    petitionButton.style.opacity="1";
+
+
+    petitionButton.style.transform=
+        "translateY(0)";
+
+
+}
+
+
+
+
+
+
+// =====================================================
+// EVENT LISTENERS
+// =====================================================
+
+
+// Desktop
+
+cakeButton.addEventListener(
+    "mousedown",
+    startHolding
+);
+
+
+cakeButton.addEventListener(
+    "mouseup",
+    stopHolding
+);
+
+
+cakeButton.addEventListener(
+    "mouseleave",
+    stopHolding
+);
+
+
+
+// Mobile
+
+cakeButton.addEventListener(
+    "touchstart",
+    startHolding
+);
+
+
+cakeButton.addEventListener(
+    "touchend",
+    stopHolding
+);
