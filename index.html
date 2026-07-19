@@ -1,54 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy 80th Boyd!</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Happy 80th Birthday Boyd!</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
+
 <body>
-  <canvas id="confetti" aria-hidden="true"></canvas>
 
-  <div class="container">
-    <h1>⚾ Happy 80th Birthday Boyd! ⚾</h1>
-    <p>Thousands of games. One legendary umpire.</p>
+<div class="container">
 
-    <button id="cakeButton" type="button" aria-label="Press and hold the cake">
-      🎂
-    </button>
+    <div id="page1">
 
-    <div class="holdRow">
-      <div class="holdBar" aria-hidden="true">
-        <div id="progressFill"></div>
-      </div>
+        <h1>⚾ Happy 80th Birthday Boyd! ⚾</h1>
+
+        <p>
+            Thousands of games.<br>
+            One legendary umpire.
+        </p>
+
+        <button id="cakeButton">🎂</button>
+
+        <p class="instructions">
+            Hold the cake for 3 seconds
+        </p>
+
     </div>
 
-    <div class="instructions">Hold the cake for ~2 seconds</div>
-    <div id="holdHint">Press & hold…</div>
-    <div id="afterMessage">Nice! You choose what happens next.</div>
+    <div id="page2" class="hidden">
 
-    <!-- CTA panel: appears after unlock -->
-    <div id="ctaPanel" class="ctaPanel" aria-live="polite">
-      <p class="ctaText">Want to open the Change.org page?</p>
+        <h1>🎉 HAPPY 80TH! 🎉</h1>
 
-      <!-- Optional: show QR image on the page too -->
-      <div class="qrWrap">
-        <p class="qrLabel">Scan QR too (optional):</p>
-        <img class="qrImg" src="qr-stay.png" alt="QR code for stay page" />
-      </div>
+        <p>
+            Help us keep Boyd on the field!
+        </p>
 
-      <div class="ctaButtons">
-        <a id="goLinkBtn" class="bigLink" href="#" target="_blank" rel="noopener">Yes, take me there</a>
-        <button id="noBtn" class="btnNo" type="button">No thanks</button>
-      </div>
+        <a
+            class="petitionButton"
+            href="https://change.org/"
+            target="_blank">
+
+            ⚾ Support the Petition
+
+        </a>
+
     </div>
 
-    <a class="bigLink" href="ump-sucks.html">Switch to “Question the Decision”</a>
-  </div>
+</div>
 
-  <script>
-    window.CHANGE_URL = "YOUR_CHANGEORG_URL_HERE";
-  </script>
-  <script src="js/main.js"></script>
+<script src="js/main.js"></script>
+
 </body>
+
 </html>
