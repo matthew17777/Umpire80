@@ -2,9 +2,21 @@ body {
     background: linear-gradient(to bottom, #0a3d62, #1e5f8a);
     color: white;
     font-family: Georgia, serif;
-    text-align: center;
+
     margin: 0;
-    padding: 60px;
+
+    /* These 4 lines perfectly center everything */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+}
+
+.container {
+    text-align: center;
+    max-width: 800px;
+    padding: 40px;
 }
 
 h1 {
@@ -15,4 +27,22 @@ h1 {
 p {
     font-size: 28px;
     line-height: 1.6;
+}
+
+#cakeButton {
+    font-size: 150px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+#cakeButton:hover {
+    transform: scale(1.1);
+}
+
+.instructions {
+    font-size: 22px;
+    opacity: 0.8;
 }
