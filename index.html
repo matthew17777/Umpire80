@@ -3,61 +3,90 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Happy 80th Birthday Boyd!</title>
+    <title>🎂 Happy 80th Birthday, Boyd!</title>
 
-<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
 </head>
 
 <body>
 
-<div class="glass">
+    <div class="glass-card">
 
-<div id="page1">
+        <!-- ========================================================= -->
+        <!-- FIRST SCREEN -->
+        <!-- ========================================================= -->
 
-<h1>⚾ Happy 80th Birthday Boyd! ⚾</h1>
+        <section id="screen1">
 
-<p class="subtitle">
-Thousands of games.<br>
-One legendary umpire.
-</p>
+            <h1>
+                Happy 80th Birthday,<br>
+                <span class="boyd">Boyd!</span>
+            </h1>
 
-<button id="cakeButton">🎂</button>
+            <p class="subtitle">
+                Thousands of games • One legendary umpire
+            </p>
 
-<p id="instruction">
-Hold the cake for 3 seconds
-</p>
+            <button id="cakeButton" aria-label="Birthday Cake">
+                🎂
+            </button>
 
-</div>
+            <p id="instruction">
+                Hold the cake.
+            </p>
 
-<div id="page2" class="hidden">
+        </section>
 
-<h1>🎉 Happy 80th Birthday! 🎉</h1>
 
-<p class="subtitle">
-80 years.<br>
-Thousands of games.<br>
-One legendary umpire.
-</p>
 
-<a class="petitionButton"
-href="https://c.org/454tGLTjfG"
-target="_blank">
+        <!-- ========================================================= -->
+        <!-- SECOND SCREEN -->
+        <!-- (Hidden until the confetti finishes) -->
+        <!-- ========================================================= -->
 
-⚾ Support the Petition Against Age Discrimination
+        <section id="screen2" class="hidden">
 
-</a>
+            <div id="messageContainer">
 
-</div>
+                <h2 id="messageTitle">
+                    🥳 THANK YOU!
+                </h2>
 
-</div>
+                <p id="messageText">
 
-<script src="js/main.js"></script>
+                    Your birthday wishes
+                    made Boyd's day.
+
+                </p>
+
+            </div>
+
+            <a
+
+                id="petitionButton"
+
+                href="https://YOUR-CHANGE-ORG-LINK-HERE"
+
+                target="_blank"
+
+            >
+
+                ⚾ Keep Boyd on the Field
+
+            </a>
+
+        </section>
+
+    </div>
+
+    <script src="js/main.js"></script>
 
 </body>
 
