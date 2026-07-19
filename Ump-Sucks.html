@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question the Decision</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: linear-gradient(to bottom, #14061B, #2D0B3A);">
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <div class="container">
+    <h1>😬 Question the Decision</h1>
+    <p>If it feels unfair, you decide what to do next.</p>
+
+    <button id="cakeButton" type="button" aria-label="Press and hold the cake">
+      🎂
+    </button>
+
+    <div class="holdRow">
+      <div class="holdBar" aria-hidden="true">
+        <div id="progressFill"></div>
+      </div>
+    </div>
+
+    <div class="instructions">Hold the cake for ~2 seconds</div>
+    <div id="holdHint">Press & hold…</div>
+    <div id="afterMessage">Nice! You choose what happens next.</div>
+
+    <div id="ctaPanel" class="ctaPanel" aria-live="polite">
+      <p class="ctaText">Want to open the Change.org page?</p>
+
+      <div class="qrWrap">
+        <p class="qrLabel">Scan QR too (optional):</p>
+        <img class="qrImg" src="qr-ump.png" alt="QR code for ump-sucks page" />
+      </div>
+
+      <div class="ctaButtons">
+        <a id="goLinkBtn" class="bigLink" href="#" target="_blank" rel="noopener">Yes, take me there</a>
+        <button id="noBtn" class="btnNo" type="button">No thanks</button>
+      </div>
+    </div>
+
+    <a class="bigLink" href="index.html">Switch to “Happy 80th”</a>
+  </div>
+
+  <script>
+    window.CHANGE_URL = "YOUR_CHANGEORG_URL_HERE";
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>
