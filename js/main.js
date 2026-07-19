@@ -1,59 +1,127 @@
 const cake=document.getElementById("cakeButton");
 
-const first=document.getElementById("page1");
+const instruction=document.getElementById("instruction");
 
-const second=document.getElementById("page2");
+const page1=document.getElementById("page1");
+
+const page2=document.getElementById("page2");
 
 let timer;
+
+let progressTimer;
 
 let holding=false;
 
 function celebrate(){
 
-    confetti({
+confetti({
 
-        particleCount:300,
+particleCount:180,
 
-        spread:180,
+spread:90,
 
-        origin:{y:.6}
+origin:{x:.2,y:.6}
 
-    });
+});
 
-    first.classList.add("hidden");
+setTimeout(()=>{
 
-    second.classList.remove("hidden");
+confetti({
+
+particleCount:180,
+
+spread:120,
+
+origin:{x:.8,y:.6}
+
+});
+
+},200);
+
+setTimeout(()=>{
+
+confetti({
+
+particleCount:260,
+
+spread:180,
+
+origin:{y:.45}
+
+});
+
+},400);
+
+instruction.innerHTML="🎉 Surprise!";
+
+page1.classList.add("fadeOut");
+
+setTimeout(()=>{
+
+page1.classList.add("hidden");
+
+page2.classList.remove("hidden");
+
+},800);
 
 }
 
-cake.addEventListener("mousedown",start);
-
-cake.addEventListener("touchstart",start);
-
-cake.addEventListener("mouseup",stop);
-
-cake.addEventListener("mouseleave",stop);
-
-cake.addEventListener("touchend",stop);
-
 function start(){
 
-    if(holding)return;
+if(holding)return;
 
-    holding=true;
+holding=true;
 
-    cake.classList.add("growing");
+cake.classList.add("holding");
 
-    timer=setTimeout(celebrate,3000);
+let seconds=0;
+
+instruction.innerHTML="✨ Keep holding...";
+
+progressTimer=setInterval(()=>{
+
+seconds++;
+
+if(seconds===1){
+
+instruction.innerHTML="🎈 Keep holding...";
+
+}
+
+if(seconds===2){
+
+instruction.innerHTML="🎉 Almost there...";
+
+}
+
+},1000);
+
+timer=setTimeout(celebrate,3000);
 
 }
 
 function stop(){
 
-    holding=false;
+if(!holding)return;
 
-    cake.classList.remove("growing");
+holding=false;
 
-    clearTimeout(timer);
+clearTimeout(timer);
+
+clearInterval(progressTimer);
+
+cake.classList.remove("holding");
+
+instruction.innerHTML="Hold the cake for 3 seconds";
 
 }
+
+cake.addEventListener("mousedown",start);
+
+cake.addEventListener("mouseup",stop);
+
+cake.addEventListener("mouseleave",stop);
+
+cake.addEventListener("touchstart",start,{passive:true});
+
+cake.addEventListener("touchend",stop);
